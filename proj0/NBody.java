@@ -27,7 +27,7 @@ public class NBody {
 	    return allPlanets;
 	}
 
-	public private void Printing_the_Universe(Planet[] allPlanets) {
+	private void Printing_the_Universe(Planet[] allPlanets) {
 		System.out.println(allPlanets.length);
 		System.out.println(planet_radius);
 
@@ -50,7 +50,6 @@ public class NBody {
 
 		Planet[] allPlanets = readPlanets(planet_Data);
 
-		/*
 		//Creating an Animation
 		StdDraw.enableDoubleBuffering();
 
@@ -76,8 +75,6 @@ public class NBody {
 				StdDraw.pause(10);
 			}
 		}
-
-		 */
 
 		Printing_the_Universe(allPlanets);
 
