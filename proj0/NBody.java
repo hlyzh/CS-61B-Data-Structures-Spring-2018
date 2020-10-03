@@ -9,22 +9,22 @@ public class NBody {
 	}
 
 	public static Planet[] readPlanets(String filename) {
-	    In in = new In(filename);
-	    int N = in.readInt();
-	    double radius = in.readDouble();
-	    Planet[] allPlanets = new Planet[N];
+		In in = new In(filename);
+		int N = in.readInt();
+		double radius = in.readDouble();
+		Planet[] allPlanets = new Planet[N];
 
-	    for (int i = 0; i < N; i += 1) {
-	    	double xxPos = in.readDouble();
-	    	double yyPos = in.readDouble();
-	    	double xxVel = in.readDouble();
-	    	double yyVel = in.readDouble();
-	    	double mass = in.readDouble();
-	    	String imgFileName = in.readString();
-	    	allPlanets[i] = new Planet(xxPos, yyPos, xxVel, yyVel, mass, imgFileName);
+		for (int i = 0; i < N; i += 1) {
+			double xxPos = in.readDouble();
+			double yyPos = in.readDouble();
+			double xxVel = in.readDouble();
+			double yyVel = in.readDouble();
+			double mass = in.readDouble();
+			String imgFileName = in.readString();
+			allPlanets[i] = new Planet(xxPos, yyPos, xxVel, yyVel, mass, imgFileName);
 
-	    }
-	    return allPlanets;
+		}
+		return allPlanets;
 	}
 
 	private static void Printing_the_Universe(Planet[] allPlanets) {
@@ -59,8 +59,8 @@ public class NBody {
 		StdDraw.picture(0, 0, backgroundImageToDraw);
 
 		//Drawing One Planet
-	    In in = new In(planet_Data);
-	    int N = in.readInt();
+		In in = new In(planet_Data);
+		int N = in.readInt();
 
 		for (double current_T = 0; current_T < T; current_T += dt) {
 			double[] allPlanets_yForces = new double[N];
