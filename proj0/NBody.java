@@ -27,7 +27,7 @@ public class NBody {
 	    return allPlanets;
 	}
 
-	private void Printing_the_Universe(Planet[] allPlanets) {
+	private static void Printing_the_Universe(Planet[] allPlanets) {
 		System.out.println(allPlanets.length);
 		System.out.println(planet_radius);
 
