@@ -1,5 +1,5 @@
 public class NBody {
-	public static double planet_radius;
+	private static double planet_radius;
 
 	public static double readRadius(String filename) {
 	   In in = new In(filename);
@@ -27,7 +27,7 @@ public class NBody {
 	    return allPlanets;
 	}
 
-	public static void Printing_the_Universe(Planet[] allPlanets) {
+	public private void Printing_the_Universe(Planet[] allPlanets) {
 		System.out.println(allPlanets.length);
 		System.out.println(planet_radius);
 
