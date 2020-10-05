@@ -1,143 +1,121 @@
 public class ArrayDeque<T> {
-    private T[] array;
-    private int first = 0;
-    private int last = 1;
-    private int size = 0;
-    private int capacity = 8;
 
-    private void copyTo(T[] b) {
-        int bIndex = 0;
-        int index = (first + 1) % capacity;
-        int tempSize = size;
-        while ((tempSize--) > 0) {
-            b[bIndex++] = array[index];
-            index = (index + 1) % capacity;
-        }
-    }
+    private T[] items;
+    private int size;
+    private int head;
+    private int tail;
 
-    private void resize() {
-        T[] largerArray = (T[]) new Object[size * 2];
-        copyTo(largerArray);
-        array = largerArray;
-        capacity = size * 2;
-        first = capacity - 1;
-        last = size;
-    }
-
-    private void shrink() {
-        T[] smallerArray = (T[]) new Object[capacity / 2];
-        copyTo(smallerArray);
-        array = smallerArray;
-        capacity = capacity / 2;
-        first = capacity - 1;
-        last = size;
-    }
-
+    /** Create an empty deque. */
     public ArrayDeque() {
-        array = (T[]) new Object[capacity];
+        items = (T[]) new Object[8];
+        head = 0;
+        tail = 1;
+        size = 0;
+    }
+
+    private void resize(int capacity) {
+        T[] temp = (T[]) new Object[capacity];
+        if (capacity >= items.length) {
+            System.arraycopy(items, 0, temp, 0, items.length);
+        } else {
+            System.arraycopy(items, head + 1, temp, 0, tail - head - 1);
+        }
+
+
+        head = capacity - 1;
+        tail = size;
+        items = temp;
+    }
+
+    private int minusOne(int index) {
+        if (index - 1 < 0)
+            return items.length - 1;
+        return index - 1;
+    }
+
+    private int plusOne(int index) {
+        if (index + 1 > items.length - 1)
+            return 0;
+        return index + 1;
     }
 
     public void addFirst(T item) {
-        array[first] = item;
-        first = first - 1 < 0 ? capacity - 1 : first - 1;
-        size++;
-        if (size == capacity) {
-            resize();
+        if (size == items.length) {
+            resize(2 * size);
         }
+        size += 1;
+        items[head] = item;
+        head = minusOne(head);
+
     }
 
     public void addLast(T item) {
-        if (size == 0) {
-            array[first] = item;
-            first = first - 1 < 0 ? capacity - 1 : first - 1;
-        } else {
-            array[last] = item;
-            last = (last + 1) % capacity;
+        if (size == items.length) {
+            resize(2 * size);
         }
-        size++;
-        if (size == capacity) {
-            resize();
-        }
+        size += 1;
+        items[tail] = item;
+        tail = plusOne(tail);
     }
 
+    //Returns true if deque is empty, false otherwise.
     public boolean isEmpty() {
         return size == 0;
     }
 
+    //Returns the number of items in the deque.
     public int size() {
         return size;
     }
 
+    //Prints the items in the deque from first to last, separated by a space.
     public void printDeque() {
-        if (size == 0) {
-            return;
+        int i = plusOne(head);
+        while (i != tail)  {
+            System.out.print(items[i] + " ");
+            i = plusOne(i);
         }
-        int index = (first + 1) % capacity;
-        int tempSize = size;
-        while ((tempSize--) > 1) {
-            System.out.print(array[index] + " ");
-            index = (index + 1) % capacity;
-        }
-        System.out.println(array[index]);
     }
 
+    //Removes and returns the item at the front of the deque. If no such item exists, returns null.
     public T removeFirst() {
-        if (size == 0) {
+        if (isEmpty() == true) {
             return null;
         }
-        size--;
-        first = (first + 1) % capacity;
-        T res = array[first];
-        if ((size * 1.0 / capacity) < 0.251) {
-            shrink();
+        System.out.println((float)size/items.length);
+        if (items.length >= 16 & (float)size/items.length < 0.25 ) {
+            resize(items.length / 2);
         }
-        return res;
+        head = plusOne(head);
+        size -= 1;
+        T removed = items[head];
+        items[head] = null;
+        return removed;
+
     }
 
+    //Removes and returns the item at the back of the deque. If no such item exists, returns null.
     public T removeLast() {
-        if (size == 0) {
+        if (isEmpty() == true) {
             return null;
         }
-        size--;
-        last = last - 1 < 0 ? capacity - 1 : last - 1;
-        T res = array[last];
-        if ((size * 1.0 / capacity) < 0.251) {
-            shrink();
+        if (items.length >= 16 & (float)size/items.length < 0.25 ) {
+            resize(items.length / 2);
         }
-        return res;
+        tail = minusOne(tail);
+        size -= 1;
+        T removed = items[tail];
+        items[tail] = null;
+        return removed;
     }
 
+    //Gets the item at the given index, where 0 is the front, 1 is the next item, and so forth. If no such item exists, returns null. Must not alter the deque!
     public T get(int index) {
-        if (index >= size || index < 0) {
-            return null;
-        }
-        return array[(first + index + 1) % capacity];
+        if (index > head || index < tail)
+            return items[index];
+        return null;
     }
 
 
-//    public static void main(String[] args){
-//        ArrayDeque<Integer> a = new ArrayDeque<>();
-//        a.addLast(5);
-//        a.addLast(6);
-//        a.addLast(7);
-//        a.addFirst(4);
-//
-//        a.addLast(8);
-//        a.addLast(9);
-//        a.addLast(10);
-//        a.addFirst(3);
-//        a.addFirst(2);
-//        a.addFirst(1);
-//
-//        a.printDeque();
-//
-//        a.removeFirst();
-//        a.removeLast();
-//        a.removeLast();
-//        a.removeLast();
-//        a.removeLast();
-//        a.removeLast();
-//        a.printDeque();
-//        System.out.println(a.capacity);
-//    }
 }
+
