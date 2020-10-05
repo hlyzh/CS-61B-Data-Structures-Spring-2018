@@ -1,147 +1,120 @@
-public class LinkedListDeque<T> {
+public class LinkedListDeque<Item> {
 
-    private class ItemNode {
-        public ItemNode prev;
-        public T item;
-        public ItemNode next;
+    private class ListNode {
+        private Item data;
+        private ListNode prev;
+        private ListNode next;
 
-        public ItemNode(T i) {
-            this.prev = null;
-            this.item = i;
-            this.next = null;
+        private ListNode(ListNode p, Item d, ListNode n) {
+            this.prev = p;
+            this.data = d;
+            this.next = n;
         }
     }
 
-    private ItemNode sentinel;
+    private ListNode sentinel;
     private int size;
 
     /** Create an empty deque. */
     public LinkedListDeque() {
-        size = 0;
-
-        sentinel = new ItemNode(null);
-        sentinel.prev = sentinel;
+        sentinel = new ListNode(null, null, null) ;
         sentinel.next = sentinel;
+        sentinel.prev = sentinel;
+        size = 0;
     }
 
-    //Adds an item of type T to the front of the deque.
-    public void addFirst(T item) {
-        size += 1;
-
-        ItemNode curr = new ItemNode(item);
-        curr.prev = sentinel;
-        curr.next = sentinel.next;
-        sentinel.next.prev = curr;
-        sentinel.next = curr;
-
+    /** Add an Item type data to the front of deque. */
+    public void addFirst(Item data) {
+        sentinel.next = new ListNode(sentinel, data, sentinel.next);
+        sentinel.next.next.prev = sentinel.next;
+        size ++;
     }
 
-    //Adds an item of type T to the back of the deque.
-    public void addLast(T item) {
-        size += 1;
-
-        ItemNode curr = new ItemNode(item);
-        curr.prev = sentinel.prev;
-        curr.next = sentinel;
-        sentinel.prev.next = curr;
-        sentinel.prev = curr;
-
+    /** Add an Item type data to the last of th deque. */
+    public void addLast(Item data) {
+        sentinel.prev.next = new ListNode(sentinel.prev, data, sentinel);
+        sentinel.prev = sentinel.prev.next;
+        size ++ ;
     }
 
-    //Returns true if deque is empty, false otherwise.
+    /** Return true if deque is empty*/
     public boolean isEmpty() {
-        if (sentinel.next == sentinel ) {
-            return true;
-        } else {
-            return false;
-        }
+        return this.size == 0;
     }
 
-    //Returns the number of items in the deque.
+    /** Return the length of the deque. Constant time! */
     public int size() {
         return size;
     }
 
-    //Prints the items in the deque from first to last, separated by a space.
-    public void printDeque() {
-        ItemNode curr = sentinel.next;
-        while (curr != sentinel) {
-            System.out.println(curr.item);
-            curr = curr.next;
+    /** Print the data of deque. */
+    public void printDeque () {
+        ListNode node = sentinel;
+        while (node.next != sentinel) {
+            System.out.print(node.next.data + " ");
+            node = node.next;
         }
     }
 
-    //Removes and returns the item at the front of the deque. If no such item exists, returns null.
-    public T removeFirst() {
-        ItemNode curr = sentinel;
-        T remove_First_Value = sentinel.next.item;
-
-        if (isEmpty() == true) {
-            return null;
-        } else {
-            size -= 1;
-
-            curr.next = sentinel.next.next;
-            curr.next.prev = sentinel;
-            sentinel = curr;
-
-            return remove_First_Value;
+    /** Remove the first Item type data in deque and return the removed data. */
+    public Item removeFirst () {
+        if (size == 0) return null;
+        else {
+            Item first = sentinel.next.data;
+            sentinel.next.next.prev = sentinel;
+            sentinel.next = sentinel.next.next;
+            size --;
+            return first;
         }
     }
 
-    //Removes and returns the item at the back of the deque. If no such item exists, returns null.
-    public T removeLast() {
-        ItemNode curr = sentinel;
-        T remove_Last_Value = sentinel.prev.item;
-
-        if (isEmpty() == true) {
-            return null;
-        } else {
-            size -= 1;
-
-            curr.prev = sentinel.prev.prev;
-            curr.prev.next = sentinel;
-
-            sentinel = curr;
-
-            return remove_Last_Value;
+    /** Remove the last Item type data in deque and return the removed data. */
+    public Item removeLast () {
+        if (size == 0)  return null;
+        else {
+            Item last = sentinel.prev.data;
+            sentinel.prev.prev.next = sentinel.prev.next;
+            sentinel.prev = sentinel.prev.prev;
+            size --;
+            return  last;
         }
     }
 
-    //Gets the item at the given index, where 0 is the front, 1 is the next item, and so forth. If no such item exists, returns null. Must not alter the deque!
-    public T get(int index) {
-        ItemNode curr = sentinel.next;
-        if (index > size -1 ) {
-            return null;
-        } else {
-            int curr_index = 0;
-            while (curr_index != index) {
-                curr_index += 1;
-
-                curr = curr.next;
-            }
-            return curr.item;
+    /** Get index-th position data. By iterative. */
+    public Item get(int index) {
+        int length = size;
+        ListNode node = sentinel.next;
+        if (index > length - 1)  return null;   // Out of range.
+        else {
+            for (int i = 0; i < index; i++)
+                node = node.next;
         }
+        return node.data;
     }
 
-    private T getRecursive_helper(ItemNode curr, int index) {
-        if (index != 0) {
-            curr = curr.next;
-            index -= 1;
-            return getRecursive_helper(curr, index);
-        } else {
-            return curr.item;
+    /** Get index-th position data. By recursion. */
+    public Item getRecursion(int index) {
+        int length = size;
+        if (index > length-1) return null;      // Out of range.
+        else {
+            return getRecursionHelper(sentinel.next, index);
         }
     }
-
-    //ame as get, but uses recursion.
-    public T getRecursive(int i) {
-        if (i > size -1 ) {
-            return null;
-        } else {
-            return getRecursive_helper(sentinel.next, i);
-        }
+    /** getRecursionHelper*/
+    public Item getRecursionHelper(ListNode node, int i) {
+        if (i == 0)
+            return node.data;
+        else
+            return getRecursionHelper(node.next, i-1);
     }
 
+    public static void main(String[] args)  {
+        LinkedListDeque<Integer> list = new LinkedListDeque<>();
+        list.addFirst(1);
+        list.addLast(22);
+        list.addLast(333);
+        list.addLast(4444);
+        list.printDeque();
+    }
 
 }
