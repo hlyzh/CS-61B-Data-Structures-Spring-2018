@@ -15,15 +15,15 @@ public class ArrayDeque<T> {
 
     private void resize(int capacity) {
         T[] temp = (T[]) new Object[capacity];
-        System.arraycopy(items, 0, temp, 4, size);
+        System.arraycopy(items, 0, temp, 1, size);
         items = temp;
     }
 
     public void addFirst(T item) {
         if (size >= items.length) {
             resize(2 * size);
-            nextFirst = 3;
-            nextLast = 4 + size;
+            nextFirst = 0;
+            nextLast = size + 1;
         }
         size += 1;
         items[nextFirst] = item;
