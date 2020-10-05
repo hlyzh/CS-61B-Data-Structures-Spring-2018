@@ -16,11 +16,11 @@ public class ArrayDeque<T> {
     private void resize(int capacity) {
         T[] temp = (T[]) new Object[capacity];
         if (capacity >= items.length) {
-            System.arraycopy(items, 0, temp, 0, items.length);
+            System.arraycopy(items, tail, temp, 0, items.length - tail);
+            System.arraycopy(items, 0, temp, items.length - tail, items.length - (items.length - tail));
         } else {
             System.arraycopy(items, head + 1, temp, 0, tail - head - 1);
         }
-
 
         head = capacity - 1;
         tail = size;
@@ -43,6 +43,7 @@ public class ArrayDeque<T> {
         if (size == items.length) {
             resize(2 * size);
         }
+
         size += 1;
         items[head] = item;
         head = minusOne(head);
@@ -53,9 +54,17 @@ public class ArrayDeque<T> {
         if (size == items.length) {
             resize(2 * size);
         }
-        size += 1;
-        items[tail] = item;
-        tail = plusOne(tail);
+
+        if (size == 0) {
+            size += 1;
+            items[head] = item;
+            head = minusOne(head);
+        } else {
+            size += 1;
+            items[tail] = item;
+            tail = plusOne(tail);
+        }
+
     }
 
     //Returns true if deque is empty, false otherwise.
@@ -75,6 +84,7 @@ public class ArrayDeque<T> {
             System.out.print(items[i] + " ");
             i = plusOne(i);
         }
+        System.out.println("");
     }
 
     //Removes and returns the item at the front of the deque. If no such item exists, returns null.
@@ -82,7 +92,6 @@ public class ArrayDeque<T> {
         if (isEmpty() == true) {
             return null;
         }
-        System.out.println((float)size/items.length);
         if (items.length >= 16 & (float)size/items.length < 0.25 ) {
             resize(items.length / 2);
         }
@@ -116,6 +125,32 @@ public class ArrayDeque<T> {
         return null;
     }
 
+    /*
+    public static void main(String[] args){
+        ArrayDeque<Integer> a = new ArrayDeque<>();
+        a.addLast(5);
+        a.addLast(6);
+        a.addLast(7);
+        a.addFirst(4);
+
+        a.addLast(8);
+        a.addLast(9);
+        a.addLast(10);
+        a.addFirst(3);
+        a.addFirst(2);
+        a.addFirst(1);
+
+        a.printDeque();
+        a.removeFirst();
+        a.removeLast();
+        a.removeLast();
+        a.removeLast();
+        a.removeLast();
+        a.removeLast();
+        a.printDeque();
+
+    }
+     */
 
 }
 
