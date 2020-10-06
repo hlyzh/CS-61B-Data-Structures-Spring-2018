@@ -17,9 +17,13 @@ public class ArrayDeque<T> {
         T[] temp = (T[]) new Object[capacity];
         if (capacity >= items.length) {
             System.arraycopy(items, tail, temp, 0, items.length - tail);
-            System.arraycopy(items, 0, temp, items.length - tail, items.length - (items.length - tail));
+            System.arraycopy(items, 0, temp, items.length - tail, tail);
         } else {
-            System.arraycopy(items, head + 1, temp, 0, tail - head - 1);
+            //System.arraycopy(items, head + 1, temp, 0, tail - head - 1);
+
+            System.arraycopy(items, head + 1, temp, 0, items.length - head - 1);
+            System.arraycopy(items, 0, temp, items.length - head - 1, tail);
+
         }
 
         head = capacity - 1;
