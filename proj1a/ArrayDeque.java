@@ -19,6 +19,7 @@ public class ArrayDeque<T> {
             System.arraycopy(items, tail, temp, 0, items.length - tail);
             System.arraycopy(items, 0, temp, items.length - tail, tail);
         } else {
+            //System.arraycopy(items, head + 1, temp, 0, tail - head - 1);
             System.arraycopy(items, head + 1, temp, 0, items.length - head - 1);
             System.arraycopy(items, 0, temp, items.length - head - 1, tail);
         }
@@ -41,28 +42,31 @@ public class ArrayDeque<T> {
     }
 
     public void addFirst(T item) {
-        items[head] = item;
-        head = minusOne(head);
-        size += 1;
-
         if (size == items.length) {
             resize(2 * size);
         }
+
+        size += 1;
+        items[head] = item;
+        head = minusOne(head);
+
     }
 
     public void addLast(T item) {
-        if (size == 0) {
-            items[head] = item;
-            head = minusOne(head);
-        } else {
-            items[tail] = item;
-            tail = plusOne(tail);
-        }
-        size += 1;
-
         if (size == items.length) {
             resize(2 * size);
         }
+
+        if (size == 0) {
+            size += 1;
+            items[head] = item;
+            head = minusOne(head);
+        } else {
+            size += 1;
+            items[tail] = item;
+            tail = plusOne(tail);
+        }
+
     }
 
     //Returns true if deque is empty, false otherwise.
@@ -76,11 +80,7 @@ public class ArrayDeque<T> {
     }
 
     //Prints the items in the deque from first to last, separated by a space.
-    //?
     public void printDeque() {
-        if (size == 0) {
-            return;
-        }
         int i = plusOne(head);
         while (i != tail)  {
             System.out.print(items[i] + " ");
@@ -94,14 +94,13 @@ public class ArrayDeque<T> {
         if (isEmpty() == true) {
             return null;
         }
-        size -= 1;
-        head = plusOne(head);
-        T removed = items[head];
-        //items[head] = null;
-        System.out.println("ratio:" + (float)size/items.length);
-        if ((float)size/items.length <= 0.25 ) {
+        if (items.length >= 16 & (float)size/items.length < 0.25 ) {
             resize(items.length / 2);
         }
+        head = plusOne(head);
+        size -= 1;
+        T removed = items[head];
+        items[head] = null;
         return removed;
 
     }
@@ -111,26 +110,24 @@ public class ArrayDeque<T> {
         if (isEmpty() == true) {
             return null;
         }
-        size -= 1;
-        tail = minusOne(tail);
-        T removed = items[tail];
-        //items[tail] = null;
-        System.out.println("ratio:" + (float)size/items.length);
-        if ((float)size/items.length <= 0.25 ) {
+        if (items.length >= 16 & (float)size/items.length < 0.25 ) {
             resize(items.length / 2);
         }
+        tail = minusOne(tail);
+        size -= 1;
+        T removed = items[tail];
+        items[tail] = null;
         return removed;
     }
 
     //Gets the item at the given index, where 0 is the front, 1 is the next item, and so forth. If no such item exists, returns null. Must not alter the deque!
     public T get(int index) {
-        if (index >= size || index < 0) {
-            return null;
-        }
-        return items[index];
-
+        if (index > head || index < tail)
+            return items[index];
+        return null;
     }
 
+    /*
     public static void main(String[] args){
         ArrayDeque<Integer> a = new ArrayDeque<>();
         a.addLast(5);
@@ -154,11 +151,7 @@ public class ArrayDeque<T> {
         a.removeLast();
         a.printDeque();
 
-        System.out.println(a.get(0));
-
     }
-
-
+     */
 
 }
-
