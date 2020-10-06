@@ -113,8 +113,8 @@ public class ArrayDeque<T> {
         if (index >= size || index < 0) {
             return null;
         }
-        //return array[(first + index + 1) % capacity];
-        return array[index];
+        return array[(first + index + 1) % capacity];
+        //return array[index];
     }
 
     public static void main(String[] args){
