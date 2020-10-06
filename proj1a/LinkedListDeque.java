@@ -1,14 +1,14 @@
 public class LinkedListDeque<T> {
 
     private class ItemNode {
-        public ItemNode prev;
-        public T item;
-        public ItemNode next;
+        private ItemNode prev;
+        private T item;
+        private ItemNode next;
 
-        public ItemNode(ItemNode prev_node, T i, ItemNode next_node) {
-            this.prev = prev_node;
+        public ItemNode(ItemNode prevNode, T i, ItemNode nextNode) {
+            this.prev = prevNode;
             this.item = i;
-            this.next = next_node;
+            this.next = nextNode;
         }
     }
 
@@ -62,48 +62,49 @@ public class LinkedListDeque<T> {
 
     //Removes and returns the item at the front of the deque. If no such item exists, returns null.
     public T removeFirst() {
-        if (isEmpty() == true) {
+        if (isEmpty()) {
             return null;
         }
-        T remove_First_Value = sentinel.next.item;
+        T removeFirstValue = sentinel.next.item;
         size -= 1;
         sentinel.next = sentinel.next.next;
         sentinel.next.prev = sentinel;
-        return remove_First_Value;
+        return removeFirstValue;
     }
 
     //Removes and returns the item at the back of the deque. If no such item exists, returns null.
     public T removeLast() {
-        if (isEmpty() == true) {
+        if (isEmpty()) {
             return null;
         }
-        T remove_Last_Value = sentinel.prev.item;
+        T removeLastValue = sentinel.prev.item;
         size -= 1;
         sentinel.prev = sentinel.prev.prev;
         sentinel.prev.next = sentinel;
-        return  remove_Last_Value;
+        return  removeLastValue;
     }
 
-    //Gets the item at the given index, where 0 is the front, 1 is the next item, and so forth. If no such item exists, returns null. Must not alter the deque!
+    //Gets the item at the given index, where 0 is the front, 1 is the next item, and so forth.
+    //If no such item exists, returns null. Must not alter the deque!
     public T get(int index) {
         ItemNode curr = sentinel.next;
-        if (index > size -1 || index < 0) {
+        if (index > size - 1 || index < 0) {
             return null;
         } else {
-            int curr_index = 0;
-            while (curr_index != index) {
-                curr_index += 1;
+            int currIndex = 0;
+            while (currIndex != index) {
+                currIndex += 1;
                 curr = curr.next;
             }
             return curr.item;
         }
     }
 
-    private T getRecursive_helper(ItemNode curr, int index) {
+    private T getRecursivehelper(ItemNode curr, int index) {
         if (index != 0) {
             curr = curr.next;
             index -= 1;
-            return getRecursive_helper(curr, index);
+            return getRecursivehelper(curr, index);
         }
         return curr.item;
     }
@@ -113,7 +114,7 @@ public class LinkedListDeque<T> {
         if (i > size -1 || i < 0) {
             return null;
         }
-        return getRecursive_helper(sentinel.next, i);
+        return getRecursivehelper(sentinel.next, i);
     }
 
 }

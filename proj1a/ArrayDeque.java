@@ -30,14 +30,16 @@ public class ArrayDeque<T> {
     }
 
     private int minusOne(int index) {
-        if (index - 1 < 0)
+        if (index - 1 < 0) {
             return items.length - 1;
+        }
         return index - 1;
     }
 
     private int plusOne(int index) {
-        if (index + 1 > items.length - 1)
+        if (index + 1 > items.length - 1) {
             return 0;
+        }
         return index + 1;
     }
 
@@ -91,7 +93,7 @@ public class ArrayDeque<T> {
 
     //Removes and returns the item at the front of the deque. If no such item exists, returns null.
     public T removeFirst() {
-        if (isEmpty() == true) {
+        if (isEmpty()) {
             return null;
         }
         if (items.length >= 16 & (float)size/items.length < 0.25 ) {
@@ -107,7 +109,7 @@ public class ArrayDeque<T> {
 
     //Removes and returns the item at the back of the deque. If no such item exists, returns null.
     public T removeLast() {
-        if (isEmpty() == true) {
+        if (isEmpty()) {
             return null;
         }
         if (items.length >= 16 & (float)size/items.length < 0.25 ) {
@@ -120,7 +122,8 @@ public class ArrayDeque<T> {
         return removed;
     }
 
-    //Gets the item at the given index, where 0 is the front, 1 is the next item, and so forth. If no such item exists, returns null. Must not alter the deque!
+    //Gets the item at the given index, where 0 is the front, 1 is the next item, and so forth.
+    //If no such item exists, returns null. Must not alter the deque!
     public T get(int index) {
         if (index >= size || index < 0) {
             return null;
