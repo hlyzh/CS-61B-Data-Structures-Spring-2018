@@ -96,7 +96,7 @@ public class ArrayDeque<T> {
         if (isEmpty()) {
             return null;
         }
-        if (items.length >= 16 & (float)size/items.length < 0.25 ) {
+        if (items.length >= 16 & (float) size / items.length < 0.25 ) {
             resize(items.length / 2);
         }
         head = plusOne(head);
@@ -112,7 +112,7 @@ public class ArrayDeque<T> {
         if (isEmpty()) {
             return null;
         }
-        if (items.length >= 16 & (float)size/items.length < 0.25 ) {
+        if (items.length >= 16 & (float) size / items.length < 0.25 ) {
             resize(items.length / 2);
         }
         tail = minusOne(tail);
