@@ -1,36 +1,36 @@
 //Palindrome.java: A class for palindrome operations.
 public class Palindrome {
 
-	public Deque<Character> wordToDeque(String word) {
+    public Deque<Character> wordToDeque(String word) {
         Deque<Character> deque = new LinkedListDeque<Character>();
-		for (int i = 0; i < word.length(); i += 1) {
+        for (int i = 0; i < word.length(); i += 1) {
             deque.addLast(word.charAt(i));
-		}
-		return deque;
-	}
+        }
+        return deque;
+    }
 
-	private boolean isPalindrome(Deque<Character> deque_list) {
-        int length = deque_list.size();
+    private boolean isPalindrome(Deque<Character> dequeList) {
+        int length = dequeList.size();
         if (length <= 1) {
             return true;
         } else {
-            if (deque_list.removeFirst() != deque_list.removeLast()) {
+            if (dequeList.removeFirst() != dequeList.removeLast()) {
                 return false;
             } else {
-                return isPalindrome(deque_list);
+                return isPalindrome(dequeList);
             }
         }
     }
 
     public boolean isPalindrome(String word) {
-        Deque<Character> deque_list = wordToDeque(word);
-        return isPalindrome(deque_list);
+        Deque<Character> dequeList = wordToDeque(word);
+        return isPalindrome(dequeList);
 
     }
 
     public boolean isPalindrome(String word, CharacterComparator cc) {
-        Deque<Character> deque_list = wordToDeque(word);
-        int length = deque_list.size();
+        Deque<Character> dequeList = wordToDeque(word);
+        int length = dequeList.size();
         if (length <= 1) {
             return true;
         } else {
@@ -39,8 +39,10 @@ public class Palindrome {
                 if (i == length - i - 1) {
                     break;
                 } else {
-                    if (cc.equalChars(deque_list.get(i), deque_list.get(length - i - 1)) == false) {
+                    if (cc.equalChars(dequeList.get(i), dequeList.get(length - i - 1)) == false) {
                         return false;
+                    } else {
+                        continue;
                     }
                 }
             }

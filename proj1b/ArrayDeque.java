@@ -43,6 +43,7 @@ public class ArrayDeque<T> implements Deque<T>{
         return index + 1;
     }
     
+
     @Override
     public void addFirst(T item) {
         if (size == items.length) {
@@ -140,7 +141,7 @@ public class ArrayDeque<T> implements Deque<T>{
 
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         ArrayDeque<Integer> a = new ArrayDeque<>();
         a.addLast(5);
         a.addLast(6);

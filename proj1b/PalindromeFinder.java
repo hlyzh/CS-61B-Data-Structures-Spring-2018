@@ -1,7 +1,5 @@
 //PalindromeFinder.java: Class that helps identify generalized Palindromes in English.
 
-import static org.junit.Assert.assertTrue;
-
 /** This class outputs all palindromes in the words file in the current directory. */
 public class PalindromeFinder {
 
