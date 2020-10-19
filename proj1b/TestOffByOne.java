@@ -1,3 +1,5 @@
+//TestOffByOne.java: A class for JUnit tests for OffByOne.
+
 import org.junit.Test;
 import static org.junit.Assert.*;
 

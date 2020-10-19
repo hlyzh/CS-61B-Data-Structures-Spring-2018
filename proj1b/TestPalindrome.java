@@ -1,3 +1,5 @@
+//TestPalindrome.java: A class for JUnit tests for Palindrome.
+
 import org.junit.Test;
 import static org.junit.Assert.*;
 
