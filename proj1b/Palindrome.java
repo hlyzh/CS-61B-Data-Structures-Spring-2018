@@ -34,14 +34,14 @@ public class Palindrome {
         if (length <= 1) {
             return true;
         } else {
-
             for (int i = 0; i < length; i += 1) {
                 if (i == length - i - 1) {
                     break;
                 } else {
+                    System.out.println(dequeList.get(i) + "    " + dequeList.get(length - i - 1));
                     if (cc.equalChars(dequeList.get(i), dequeList.get(length - i - 1)) == false) {
                         return false;
-                    return false;
+                    }
                 }
             }
             return true;
