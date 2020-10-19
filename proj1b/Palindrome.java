@@ -39,7 +39,7 @@ public class Palindrome {
                     break;
                 } else {
                     System.out.println(dequeList.get(i) + "    " + dequeList.get(length - i - 1));
-                    if (! cc.equalChars(dequeList.get(i), dequeList.get(length - i - 1))) {
+                    if (!cc.equalChars(dequeList.get(i), dequeList.get(length - i - 1))) {
                         return false;
                     }
                 }
