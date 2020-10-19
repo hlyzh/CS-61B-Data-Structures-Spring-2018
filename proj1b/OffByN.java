@@ -1,5 +1,5 @@
 //OffByN.java: A class for off-by-N comparators.
-public class OffByN<T> implements CharacterComparator {
+public class OffByN implements CharacterComparator {
     private int gap;
 
     public OffByN(int N) {
