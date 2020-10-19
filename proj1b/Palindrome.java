@@ -41,9 +41,7 @@ public class Palindrome {
                 } else {
                     if (cc.equalChars(dequeList.get(i), dequeList.get(length - i - 1)) == false) {
                         return false;
-                    } else {
-                        continue;
-                    }
+                    return false;
                 }
             }
             return true;

@@ -11,9 +11,8 @@ public class OffByN implements CharacterComparator {
         int difference = x - y;
         if (difference == this.gap || difference == -this.gap) {
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
 }
